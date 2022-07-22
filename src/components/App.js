@@ -1,44 +1,29 @@
-import logo from "./images/Vector.svg";
 import pencil from "./images/edit-avatar.svg";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 
 function App() {
   return (
     <div className="page">
-      <header className="header">
-        <img src={logo} alt="Around the U.S." className="header__title" />
-      </header>
-      <main>
-        <section className="profile">
-          <div className="profile__avatar">
-            <div className="profile__avatar-overlay">
-              <img src={pencil} alt="edit avatar" className="profile__avatar-icon" />
-            </div>
-          </div>
-          <div className="profile__profile-info">
-            <div className="profile__name-wrapper">
-              <h1 className="profile__name"></h1>
-              <button type="button" className="button profile__edit-button"></button>
-            </div>
-            <p className="profile__title"></p>
-          </div>
-          <button type="button" className="button profile__add-button"></button>
-        </section>
-
-        <section className="places"></section>
-      </main>
-
-      <footer className="footer">
-        <p className="footer__paragraph">© 2021 Around The U.S.</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
 
       <template id="card-template">
         <article className="places__card">
-          <button type="button" className="button places__remove-button"></button>
+          <button
+            type="button"
+            className="button places__remove-button"
+          ></button>
           <img src=" " alt="" className="places__image" />
           <div className="places__bottom">
             <h2 className="places__title"></h2>
             <div className="places__like-section">
-              <button type="button" className="button places__like-button"></button>
+              <button
+                type="button"
+                className="button places__like-button"
+              ></button>
               <span className="places__like-count"></span>
             </div>
           </div>
@@ -86,7 +71,11 @@ function App() {
       <div className="popup form form_type_new-card">
         <div className="form__container form__container_type_new-card">
           <button type="button" className="button popup__close-button"></button>
-          <form className="form form__new-card popup__form" name="newCardForm" novalidate>
+          <form
+            className="form form__new-card popup__form"
+            name="newCardForm"
+            novalidate
+          >
             <h3 className="form__title">New place</h3>
             <input
               type="text"
@@ -98,7 +87,10 @@ function App() {
               minlength="1"
               maxlength="30"
             />
-            <span id="img-title-input-error" className="form__input-error"></span>
+            <span
+              id="img-title-input-error"
+              className="form__input-error"
+            ></span>
             <input
               type="url"
               placeholder="Image link"
@@ -107,7 +99,10 @@ function App() {
               name="newCardLink"
               required
             />
-            <span id="img-link-input-error" className="form__input-error"></span>
+            <span
+              id="img-link-input-error"
+              className="form__input-error"
+            ></span>
             <button type="submit" className="button form__save-button">
               Create
             </button>
