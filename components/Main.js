@@ -1,6 +1,6 @@
 import pencil from "../images/edit-avatar.svg";
 
-export default function Main() {
+export default function Main(props) {
   return (
     <main>
       <section className="profile">
@@ -10,6 +10,7 @@ export default function Main() {
               src={pencil}
               alt="edit avatar"
               className="profile__avatar-icon"
+              onClick={props.onEditAvatarClick}
             />
           </div>
         </div>
@@ -19,11 +20,16 @@ export default function Main() {
             <button
               type="button"
               className="button profile__edit-button"
+              onClick={props.onEditProfileClick}
             ></button>
           </div>
           <p className="profile__title"></p>
         </div>
-        <button type="button" className="button profile__add-button"></button>
+        <button
+          type="button"
+          className="button profile__add-button"
+          onClick={props.onAddPlaceClick}
+        ></button>
       </section>
 
       <section className="places"></section>
