@@ -39,25 +39,6 @@ function App() {
       />
       <Footer />
 
-      <template id="card-template">
-        <article className="places__card">
-          <button
-            type="button"
-            className="button places__remove-button"
-          ></button>
-          <img src=" " alt="" className="places__image" />
-          <div className="places__bottom">
-            <h2 className="places__title"></h2>
-            <div className="places__like-section">
-              <button
-                type="button"
-                className="button places__like-button"
-              ></button>
-              <span className="places__like-count"></span>
-            </div>
-          </div>
-        </article>
-      </template>
 
       <PopupWithForm
         name="profile"
