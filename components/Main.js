@@ -49,7 +49,7 @@ export default function Main(props) {
 
       <section className="places">
         {cards.map((card) => {
-          return <Card key={card._id} card={card} />;
+          return <Card key={card._id} card={card} onCardClick={props.onCardClick} />;
         })}
       </section>
     </main>

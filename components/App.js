@@ -6,12 +6,12 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isPreviewPopupOpen, setPreviewPopupOpen] = React.useState(false);
-  
+  const [selectedCard, setSelectedCard] = React.useState();
+
+  const handleCardClick = (card) => setSelectedCard(card);
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -22,13 +22,14 @@ function App() {
   const handleAddNewCardClick = () => {
     setAddPlacePopupOpen(true);
   };
-  const handleOpenPreviewClick = () => {};
+
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setPreviewPopupOpen(false);
+    setSelectedCard();
   };
+
   return (
     <div className="page">
       <Header />
@@ -36,11 +37,9 @@ function App() {
         onEditProfileClick={handleEditProfileClick}
         onAddPlaceClick={handleAddNewCardClick}
         onEditAvatarClick={handleEditAvatarClick}
-        onCardClick={handleOpenPreviewClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
-
-
       <PopupWithForm
         name="profile"
         title="Edit profile"
@@ -53,8 +52,8 @@ function App() {
           id="name-input"
           className="form__input form__input_type_name"
           name="profileName"
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
           required
         />
         <span id="name-input-error" className="form__input-error"></span>
@@ -64,8 +63,8 @@ function App() {
           id="title-input"
           className="form__input form__input_type_title"
           name="profileTitle"
-          minlength="2"
-          maxlength="200"
+          minLength="2"
+          maxLength="200"
           required
         />
         <span id="title-input-error" className="form__input-error"></span>
@@ -73,7 +72,6 @@ function App() {
           Save
         </button>
       </PopupWithForm>
-
       <PopupWithForm
         name="new-card"
         title="New place"
@@ -87,8 +85,8 @@ function App() {
           className="form__input form__input_type_img-title"
           name="newCardName"
           required
-          minlength="1"
-          maxlength="30"
+          minLength="1"
+          maxLength="30"
         />
         <span id="img-title-input-error" className="form__input-error"></span>
         <input
@@ -104,7 +102,6 @@ function App() {
           Create
         </button>
       </PopupWithForm>
-
       <PopupWithForm
         name="profile-avatar"
         title="Change Profile Picture"
@@ -118,26 +115,17 @@ function App() {
           className="form__input form__input_type_avatar-url"
           name="profileImageUrlInput"
           required
-          minlength="1"
+          minLength="1"
         />
-        <span
-          id="profile-avatar-url-input-error"
-          className="form__input-error"
-        ></span>
+        <span id="profile-avatar-url-input-error" className="form__input-error"></span>
         <button type="submit" className="button form__save-button">
           Save
         </button>
       </PopupWithForm>
-
-      <PopupWithForm
-        name="delete-confirm"
-        title="Are you sure?"
-        onClose={closeAllPopups}
-      >
+      <PopupWithForm name="delete-confirm" title="Are you sure?" onClose={closeAllPopups}>
         <button type="submit" className="button form__save-button"></button>
       </PopupWithForm>
-
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }

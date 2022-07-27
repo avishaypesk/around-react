@@ -6,7 +6,7 @@ export default function PopupWithForm(props) {
         <form
           className={`form form__${props.name} popup__form`}
           name={props.name}
-          novalidate
+          noValidate
         >
           <h3 className="form__title">{props.title}</h3>
           {props.children}
