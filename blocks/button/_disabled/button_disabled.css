@@ -1,8 +1,0 @@
-.button_disabled {
-  opacity: 20%;
-  cursor: default;
-}
-
-.button_disabled:hover {
-  opacity: 0.2;
-}
