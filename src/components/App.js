@@ -6,28 +6,28 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState();
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleCardClick = (card) => setSelectedCard(card);
 
   const handleEditAvatarClick = () => {
-    setEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true);
   };
   const handleEditProfileClick = () => {
-    setEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen(true);
   };
   const handleAddNewCardClick = () => {
-    setAddPlacePopupOpen(true);
+    setIsAddPlacePopupOpen(true);
   };
 
   const closeAllPopups = () => {
-    setEditAvatarPopupOpen(false);
-    setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setSelectedCard();
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setSelectedCard(null);
   };
 
   return (
@@ -45,6 +45,7 @@ function App() {
         title="Edit profile"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Save"
       >
         <input
           type="text"
@@ -68,15 +69,13 @@ function App() {
           required
         />
         <span id="title-input-error" className="form__input-error"></span>
-        <button type="submit" className="button form__save-button">
-          Save
-        </button>
       </PopupWithForm>
       <PopupWithForm
         name="new-card"
         title="New place"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Create"
       >
         <input
           type="text"
@@ -98,15 +97,14 @@ function App() {
           required
         />
         <span id="img-link-input-error" className="form__input-error"></span>
-        <button type="submit" className="button form__save-button">
-          Create
-        </button>
       </PopupWithForm>
+
       <PopupWithForm
         name="profile-avatar"
         title="Change Profile Picture"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        buttonText="Save"
       >
         <input
           type="url"
@@ -118,13 +116,14 @@ function App() {
           minLength="1"
         />
         <span id="profile-avatar-url-input-error" className="form__input-error"></span>
-        <button type="submit" className="button form__save-button">
-          Save
-        </button>
       </PopupWithForm>
-      <PopupWithForm name="delete-confirm" title="Are you sure?" onClose={closeAllPopups}>
-        <button type="submit" className="button form__save-button"></button>
-      </PopupWithForm>
+
+      <PopupWithForm
+        name="delete-confirm"
+        title="Are you sure?"
+        onClose={closeAllPopups}
+      ></PopupWithForm>
+
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
