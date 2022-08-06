@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -24,6 +25,13 @@ function App() {
   };
   const handleAddNewCardClick = () => {
     setIsAddPlacePopupOpen(true);
+  };
+
+  const handleUpdateUser = ({ name, about }) => {
+    api
+      .updateUserInfo({ name, about })
+      .then((user) => setCurrentUser(user))
+      .catch((err) => console.log(err));
   };
 
   const closeAllPopups = () => {
@@ -51,36 +59,12 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer />
-        <PopupWithForm
-          name="profile"
-          title="Edit profile"
+        <EditProfilePopup
+          onUpdateUser={handleUpdateUser}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          buttonText="Save"
-        >
-          <input
-            type="text"
-            placeholder="Name"
-            id="name-input"
-            className="form__input form__input_type_name"
-            name="profileName"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span id="name-input-error" className="form__input-error"></span>
-          <input
-            type="text"
-            placeholder="Title"
-            id="title-input"
-            className="form__input form__input_type_title"
-            name="profileTitle"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span id="title-input-error" className="form__input-error"></span>
-        </PopupWithForm>
+        />
+
         <PopupWithForm
           name="new-card"
           title="New place"
