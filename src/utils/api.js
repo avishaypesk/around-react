@@ -17,9 +17,9 @@ class Api {
   _handleResponse = (res) => (res.ok ? res.json() : Promise.reject(`Error: ${res.status}`));
   _handleError = (err) => Promise.reject(err);
 
-  init = () => Promise.all([this._getInitialCards(), this.getUserInfo()]);
+  init = () => Promise.all([this.getInitialCards(), this.getUserInfo()]);
 
-  _getInitialCards = () => this._fetch({ url: "cards" });
+  getInitialCards = () => this._fetch({ url: "cards" });
 
   getUserInfo = () => this._fetch({ url: "users/me" });
 
@@ -34,9 +34,9 @@ class Api {
 
   deleteCard = (cardId) => this._fetch({ url: `cards/${cardId}`, method: "DELETE" });
 
-  increaseLikeCount = (cardId) => this._fetch({ url: `cards/likes/${cardId}`, method: "PUT" });
-
-  reduceLikeCount = (cardId) => this._fetch({ url: `cards/likes/${cardId}`, method: "DELETE" });
+  handleLikeCardStatus = (cardId, isLiked) => {
+    return this._fetch({ url: `cards/likes/${cardId}`, method: isLiked ? "DELETE" : "PUT" });
+  };
 }
 
 const api = new Api(
