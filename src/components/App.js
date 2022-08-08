@@ -7,6 +7,7 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -30,6 +31,13 @@ function App() {
   const handleUpdateUser = ({ name, about }) => {
     api
       .updateUserInfo({ name, about })
+      .then((user) => setCurrentUser(user))
+      .catch((err) => console.log(err));
+  };
+
+  const handleUpdateAvatar = (url) => {
+    api
+      .updateUserImage(url)
       .then((user) => setCurrentUser(user))
       .catch((err) => console.log(err));
   };
@@ -65,6 +73,12 @@ function App() {
           onClose={closeAllPopups}
         />
 
+        <EditAvatarPopup
+          onUpdateAvatar={handleUpdateAvatar}
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        />
+
         <PopupWithForm
           name="new-card"
           title="New place"
@@ -92,25 +106,6 @@ function App() {
             required
           />
           <span id="img-link-input-error" className="form__input-error"></span>
-        </PopupWithForm>
-
-        <PopupWithForm
-          name="profile-avatar"
-          title="Change Profile Picture"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          buttonText="Save"
-        >
-          <input
-            type="url"
-            placeholder="Image URL"
-            id="profile-avatar-url-input"
-            className="form__input form__input_type_avatar-url"
-            name="profileImageUrlInput"
-            required
-            minLength="1"
-          />
-          <span id="profile-avatar-url-input-error" className="form__input-error"></span>
         </PopupWithForm>
 
         <PopupWithForm
