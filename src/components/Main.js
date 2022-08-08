@@ -1,42 +1,10 @@
 import React, { useContext } from "react";
 import pencil from "../images/edit-avatar.svg";
-import api from "../utils/api";
 import Card from "./Card";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 export default function Main(props) {
-  const [cards, setCards] = React.useState([]);
   const currentUser = useContext(CurrentUserContext);
-
-  const handleCardLike = (card, isLiked) => {
-    api
-      .handleLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) => (currentCard._id === card._id ? newCard : currentCard))
-        );
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleCardDeleteClick = ({ _id: id }) => {
-    api
-      .deleteCard(id)
-      .then(() => {
-        const filteredCards = cards.filter((card) => card._id !== id);
-        setCards(filteredCards);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <main>
@@ -70,14 +38,14 @@ export default function Main(props) {
       </section>
 
       <section className="places">
-        {cards.map((card) => {
+        {props.cards.map((card) => {
           return (
             <Card
               key={card._id}
               card={card}
               onCardClick={props.onCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDeleteClick}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
             />
           );
         })}
