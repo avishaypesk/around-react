@@ -16,6 +16,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleCardClick = (card) => setSelectedCard(card);
 
@@ -30,23 +31,42 @@ function App() {
   };
 
   const handleUpdateUser = ({ name, about }) => {
+    setIsLoading(true);
+
     api
       .updateUserInfo({ name, about })
-      .then((user) => setCurrentUser(user))
+      .then((user) => {
+        setCurrentUser(user);
+        closeAllPopups();
+        setIsLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
   const handleUpdateAvatar = (url) => {
+    setIsLoading(true);
+
     api
       .updateUserImage(url)
-      .then((user) => setCurrentUser(user))
+      .then((user) => {
+        setCurrentUser(user);
+        closeAllPopups();
+        setIsLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
   const handleAddPlaceSubmit = ({ name, link }) => {
+    setIsLoading(true);
+
     api
       .submitNewCard({ name, link })
-      .then((card) => setCards([card, ...cards]))
+      .then((card) => {
+        setCards([card, ...cards]);
+        closeAllPopups();
+        setIsLoading(false);
+      })
+
       .catch((err) => console.log(err));
   };
 
@@ -56,6 +76,18 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
   };
+
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    };
+
+    document.addEventListener("keydown", closeByEscape);
+
+    return () => document.removeEventListener("keydown", closeByEscape);
+  }, []);
 
   useEffect(() => {
     api
@@ -114,18 +146,21 @@ function App() {
           onUpdateUser={handleUpdateUser}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          buttonText={isLoading ? "Saving..." : "Save"}
         />
 
         <EditAvatarPopup
           onUpdateAvatar={handleUpdateAvatar}
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          buttonText={isLoading ? "Saving..." : "Save"}
         />
 
         <AddPlacePopup
           onAddPlaceSubmit={handleAddPlaceSubmit}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          buttonText={isLoading ? "Creating..." : "Create"}
         />
 
         <PopupWithForm

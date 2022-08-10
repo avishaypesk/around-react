@@ -1,14 +1,13 @@
 import PopupWithForm from "./PopupWithForm";
 import React from "react";
 
-export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
+export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit, buttonText }) {
   const [cardName, setCardName] = React.useState("");
   const [cardLink, setCardLink] = React.useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddPlaceSubmit({ name: cardName, link: cardLink });
-    onClose();
   };
 
   const handleCardNameChange = (event) => setCardName(event.target.value);
@@ -21,11 +20,12 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
       title="New place"
       isOpen={isOpen}
       onClose={onClose}
-      buttonText="Create"
+      buttonText={buttonText}
       onSubmit={handleSubmit}
     >
       <input
         onChange={handleCardNameChange}
+        value={cardName}
         type="text"
         placeholder="Title"
         id="img-title-input"
@@ -38,6 +38,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
       <span id="img-title-input-error" className="form__input-error"></span>
       <input
         onChange={handleCardLinkChange}
+        value={cardLink}
         type="url"
         placeholder="Image link"
         id="img-link-input"
